@@ -1,0 +1,34 @@
+# ============================================================
+# Personal information — NEVER committed. The GitHub remote is
+# public; these paths live on disk only. If the repo is ever made
+# private, un-ignoring anything here is Amber's call, logged in
+# decisions.md.
+# ============================================================
+
+# The Identity Pack: resume, about-me, story bank, voice guides,
+# personal eval corpora. Source of truth for claims about Amber.
+identity/
+
+# Per-project evidence corpora: interview notes, personal logs,
+# analytics exports, target-company research.
+projects/*/evidence/
+
+# The must-fail eval corpus is seeded from real career artifacts
+# and documented personal failures.
+evals/must-fail/
+
+# Catch-all conventions: name a file *.personal.* or *.private.*,
+# or put it in a private/ or local/ folder, and git never sees it.
+*.personal.*
+*.private.*
+private/
+local/
+
+# ============================================================
+# OS / editor / tooling junk
+# ============================================================
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.claude/settings.local.json
