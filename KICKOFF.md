@@ -20,14 +20,24 @@ That prompt shape (read → confirm → ask → propose → wait) is the working
 
 The scaffolding in this repo is most of Phase 0. What remains:
 
-- [ ] Ratify the 10 factory invariants in CLAUDE.md (Amber reads them, edits or approves; log the outcome in decisions.md) — **AMBER**
-- [ ] Decide naming/taxonomy for agents (functional names vs. branded stages) — open question #1 from the strategy doc — **AMBER**
-- [ ] **AMBER: decide repo visibility.** The GitHub remote is PUBLIC. Recommendation: make it private (`gh repo edit alharriger/ambers-pm-factory --visibility private --accept-visibility-change-consequences`) before anything is pushed — even the strategy docs reference personal topics. Nothing gets pushed until this is decided.
+- [x] Ratify the 10 factory invariants in CLAUDE.md — **ratified 2026-07-20**
+- [x] Naming/taxonomy decided **2026-07-20**: functional kebab-case agent names, PM-native vocabulary (artifacts / gates / ship), one shared project-agnostic roster driven by Project Packs. Convention lives in CLAUDE.md.
+- [x] Repo visibility decided: **PUBLIC by design** (2026-07-20). It is a portfolio piece. Privacy becomes a build requirement — see Phase 0.5 below; nothing is pushed until that gate exists and the redaction review passes.
 - [x] `git init` housekeeping: remote confirmed; `.gitignore` added excluding all personal information (`identity/`, `projects/*/evidence/`, `evals/must-fail/`, `*.personal.*`/`*.private.*`); scaffold committed locally 2026-07-19. Push deliberately withheld pending the visibility decision above.
 - [x] Create `projects/proposal-pipeline/` as the first Project Pack stub (it will be the Phase 1 pilot) — done 2026-07-19
 - [x] Skim `identity/` files and flag anything stale — done 2026-07-19; drift flags logged in decisions.md (identity/README "known gap" is stale, two cross-repo path references)
 
-**Exit gate:** invariants ratified, first commit made (push follows the visibility decision), pilot Project Pack exists.
+**Exit gate:** invariants ratified, first commit made (push follows Phase 0.5), pilot Project Pack exists.
+
+## Phase 0.5 — The privacy gate (do before the first push)
+
+The repo is public on purpose, so "don't commit personal information" is a rule that must be enforced by code, not by memory — invariant 2 applied to Amber's own privacy. Three pieces, small:
+
+1. **Pre-commit hook** (`harness/privacy/`) — blocks any staged file under a personal path (`identity/`, `projects/*/evidence/`, `evals/must-fail/`, `*.personal.*`, `*.private.*`) and scans the staged diff against a deny-list of personal terms. The deny-list itself lives in a gitignored config, so it never leaks the very terms it protects.
+2. **One-time redaction review** — the 5 pre-decision spots logged in improvements.md, each swapped for a category reference that preserves the doc's meaning. Amber approves each. Done while history is still two commits and trivial to rewrite.
+3. **First push** — only after 1 and 2 pass, and after a final `git log -p` read-through.
+
+**Exit gate:** hook blocks a deliberately-planted personal string in a test commit; redactions approved; repo pushed clean.
 
 ## Phase 1 — The Verification Harness (the pattern-setter)
 
@@ -56,6 +66,10 @@ Two generators, one per factory client: **Product Research & Landscape** (genera
 3. What evidence exists today for a One Day Stronger Project Pack? (blocking Phase 2b)
 4. Token/cost ceiling per fully-verified artifact (informs single-judge vs. panel tiering)
 5. Monthly calibration ritual: Amber re-scores ~5 judged artifacts and diffs against the judge (recommended; decide by end of Phase 1)
+
+## Future work (not scheduled — revisit after Phase 1)
+
+- **Adoptability.** Someone else should be able to clone the factory and feed it their own identity and evidence files. Direction: a committed `identity/TEMPLATE/` blank pack that documents the interface (what each file supplies, required sections) without containing Amber's content. Cheap to add later *if* every identity-dependent component keeps referencing files by role rather than inlining Amber-specific content — so build that way from now on.
 
 ## What this factory never automates
 
