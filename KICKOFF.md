@@ -29,15 +29,15 @@ The scaffolding in this repo is most of Phase 0. What remains:
 
 **Exit gate:** invariants ratified, first commit made (push follows Phase 0.5), pilot Project Pack exists.
 
-## Phase 0.5 — The privacy gate (do before the first push)
+## Phase 0.5 — The privacy gate (DONE 2026-07-20, pending push)
 
-The repo is public on purpose, so "don't commit personal information" is a rule that must be enforced by code, not by memory — invariant 2 applied to Amber's own privacy. Three pieces, small:
+The repo is public on purpose, so "don't commit personal information" is a rule enforced by code, not memory — invariant 2 applied to Amber's own privacy.
 
-1. **Pre-commit hook** (`harness/privacy/`) — blocks any staged file under a personal path (`identity/`, `projects/*/evidence/`, `evals/must-fail/`, `*.personal.*`, `*.private.*`) and scans the staged diff against a deny-list of personal terms. The deny-list itself lives in a gitignored config, so it never leaks the very terms it protects.
-2. **One-time redaction review** — the 5 pre-decision spots logged in improvements.md, each swapped for a category reference that preserves the doc's meaning. Amber approves each. Done while history is still two commits and trivial to rewrite.
-3. **First push** — only after 1 and 2 pass, and after a final `git log -p` read-through.
+1. [x] **Pre-commit hook** (`harness/privacy/`) — blocks any staged file under a personal path and scans the staged diff against a gitignored deny-list of personal terms. Install: `bash harness/privacy/install.sh`. Verified: blocks a planted term, blocks a force-added personal file, allows a clean commit.
+2. [x] **One-time redaction review** — the 5 pre-decision spots swapped for category references; `git grep` for the terms returns clean across tracked files. Details in improvements.md.
+3. [ ] **First push** — after a final `git log -p` read-through. **AMBER: this is the moment personal-history text goes public — do the read-through with me before we push.**
 
-**Exit gate:** hook blocks a deliberately-planted personal string in a test commit; redactions approved; repo pushed clean.
+**Exit gate:** hook proven on a planted string ✓; redactions applied ✓; repo pushed clean (pending Amber's go).
 
 ## Phase 1 — The Verification Harness (the pattern-setter)
 
@@ -48,7 +48,7 @@ Build the shared loop as standalone components in `harness/`, then retrofit ONE 
 3. **Gate 1 fact-trace verifier** (`harness/gate1-verifier.md`) — subagent spec: fresh context; receives ONLY artifact + claims ledger + sources + acceptance criteria; opens every source and confirms the claim is IN it; unverifiable = hard fail. Generalizes the proposal-verify skill.
 4. **Gate 2 judge** (`harness/gate2-judge.md`) — fresh-context judge spec with adversarial/refuter posture; versioned rubric per artifact type (hard-fail booleans + scored dimensions with thresholds); panel-of-lenses variant for ship-grade artifacts.
 5. **Loop controller** (`harness/loop.md` + script) — code-enforced: fail report → back to generator with same session context → max 3 cycles per gate → escalation to Amber with disagreement log. Tiered Amber gates: judgment points stop, verified intermediates flow through.
-6. **Seed the must-fail corpus** (`evals/must-fail/`) — from the career project's documented failure history: the purged 8→3-weeks metric, the invented "privacy team," the "experimentation systems" inflation, the 35%-attribution error, the choppy about-page draft, the OpenLoop cold-third-person hook, the build-versus-buy competency claim. The harness is proven when it catches every one of them cold.
+6. **Seed the must-fail corpus** (`evals/must-fail/`) — from the career project's documented failure history (the specific cases live in the gitignored corpus, not in this public tracker): a fabricated timeline metric, an invented team, an inflated scope claim, a misattributed impact number, a choppy draft that slipped a contaminated benchmark, a cold third-person hook, and an unsupported competency claim. The harness is proven when it catches every one of them cold.
 7. **Pilot retrofit** — run a real proposal artifact through the full loop (Gates 0→1→2, loop controller, Amber ship-gate). The generator's internal self-score stays as a pre-check; the harness becomes the binding gate.
 
 **Exit gate:** harness catches 100% of the seeded must-fail cases; one real proposal artifact passes end-to-end; the escalation path has fired at least once (deliberately, if necessary) so the disagreement log format is proven.

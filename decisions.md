@@ -15,8 +15,9 @@ Append-only. Every entry: date, decision, why, and what it affects. Amber's conf
 - **Rejected from the source video:** the "drop human review" endgame. Amber's ship-gate is permanent.
 
 ### Pending Amber's ratification
-- The 10 factory invariants in CLAUDE.md
-- Agent naming/taxonomy
+- The 10 factory invariants in CLAUDE.md — *RESOLVED 2026-07-20: ratified as written (see Session 3).*
+- Agent naming/taxonomy — *RESOLVED 2026-07-20: functional names + PM-native vocabulary + shared roster (see Session 3).*
+
 
 ---
 
@@ -28,6 +29,14 @@ Append-only. Every entry: date, decision, why, and what it affects. Amber's conf
 - **Pilot Project Pack created:** `projects/proposal-pipeline/` (product-context, decisions, open-questions, gitignored evidence/), scoped to the draft→verify retrofit default.
 - **Identity Pack drift flags** (flag-and-confirm only; nothing edited): (1) `identity/README.md` "known gap" paragraph is stale — resume.md and evals/ were added after it was written and now exist; (2) `amber_voice_guide.md` references `context/writing-eval-system.md`, a career-project path that is `identity/writing-eval-system.md` here; (3) `identity/evals/resume-evals.md` references `amber-resume-SKILL-updated.md`, which does not exist in this repo. **PENDING AMBER's confirm to fix.**
 - **Cross-session memory established** (Claude-side): user context, the never-commit-personal-files rule, and the session protocol saved to persistent memory so every future session starts with them.
+
+---
+
+## 2026-07-20 — Session 4 (Phase 0.5: the privacy gate)
+
+- **Built a code-enforced privacy gate** in `harness/privacy/`: a pre-commit hook that (1) refuses any staged file under a personal path even if force-added, and (2) scans staged additions against a gitignored deny-list of personal terms. The deny-list (`deny-list.txt`) is gitignored so it never leaks the terms it protects; `deny-list.example.txt` is the committed template; `install.sh` wires `core.hooksPath` and seeds a local deny-list. Proven on a planted term, a force-added personal file, and a clean control commit. *Affects: every commit; satisfies invariant 2 for Amber's own privacy on a public repo.*
+- **Redaction review applied** (the 5 pre-decision spots): sensitive personal domains and specific past-failure lists swapped for category references, with the real cases living only in the gitignored `evals/must-fail/` corpus. `git grep` confirms tracked files are clean. *Affects: CLAUDE.md, KICKOFF.md, pm-factory-strategy.md.*
+- **First push held for Amber's read-through.** Phase 0.5 exit is complete except the push itself; pushing is the moment personal-history prose goes public, so Amber does a final `git log -p` pass with Claude before it happens. *Affects: Phase 0/0.5 exit.*
 
 ---
 

@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+# Privacy pre-commit gate for a PUBLIC portfolio repo.
+#
+# Two deterministic checks (invariant 2: everything checkable by code is
+# checked by code, never by a human's memory):
+#
+#   1. Personal PATHS  — refuse any staged file under a personal directory
+#      or matching a personal filename convention, even if force-added past
+#      .gitignore (`git add -f`).
+#   2. Personal TERMS  — scan the staged additions for any term in the
+#      gitignored deny-list (harness/privacy/deny-list.txt). The deny-list
+#      itself is never committed, so it never leaks the terms it guards.
+#
+# Exit non-zero blocks the commit. To install: harness/privacy/install.sh
+#
+# Escape hatch (use only when you are certain a match is a false positive):
+#   git commit --no-verify        # skips ALL hooks — you own the diff
+#
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+DENY_LIST="$REPO_ROOT/harness/privacy/deny-list.txt"
+RED=$'\033[31m'; YEL=$'\033[33m'; NC=$'\033[0m'
+fail=0
+
+# Staged files (added/copied/modified/renamed), NUL-safe.
+staged=()
+while IFS= read -r -d '' f; do staged+=("$f"); done \
+  < <(git diff --cached --name-only --diff-filter=ACMR -z)
+
+if [ ${#staged[@]} -eq 0 ]; then
+  exit 0
+fi
+
+# ---- Check 1: personal paths -------------------------------------------
+# Mirrors .gitignore's personal patterns. A match here means a personal
+# file was force-staged; refuse it.
+path_is_personal() {
+  case "$1" in
+    identity/*|\
+    projects/*/evidence/*|\
+    evals/must-fail/*|\
+    *.personal.*|\
+    *.private.*|\
+    private/*|*/private/*|\
+    local/*|*/local/*|\
+    harness/privacy/deny-list.txt)
+      return 0 ;;
+  esac
+  return 1
+}
+
+for f in "${staged[@]}"; do
+  if path_is_personal "$f"; then
+    echo "${RED}BLOCKED${NC} personal file staged: $f" >&2
+    fail=1
+  fi
+done
+
+# ---- Check 2: personal terms in the staged diff ------------------------
+if [ ! -f "$DENY_LIST" ]; then
+  echo "${YEL}WARNING${NC} no deny-list at harness/privacy/deny-list.txt — term scan skipped." >&2
+  echo "         Create it from deny-list.example.txt so the term gate is active." >&2
+else
+  # Added lines only (leading '+', excluding the '+++' file header).
+  added="$(git diff --cached --diff-filter=ACMR | grep -E '^\+' | grep -Ev '^\+\+\+' || true)"
+  if [ -n "$added" ]; then
+    while IFS= read -r term; do
+      # Skip blank lines and comments.
+      [ -z "$term" ] && continue
+      case "$term" in \#*) continue ;; esac
+      # Trim trailing whitespace/CR.
+      term="$(printf '%s' "$term" | sed -e 's/[[:space:]]*$//' -e 's/\r$//')"
+      [ -z "$term" ] && continue
+      if printf '%s\n' "$added" | grep -iFq -- "$term"; then
+        echo "${RED}BLOCKED${NC} deny-list term in staged diff: \"$term\"" >&2
+        fail=1
+      fi
+    done < "$DENY_LIST"
+  fi
+fi
+
+if [ "$fail" -ne 0 ]; then
+  echo "" >&2
+  echo "${RED}Commit blocked by the privacy gate.${NC} Unstage the file or reword the copy." >&2
+  echo "If this is a genuine false positive, commit with --no-verify and own the diff." >&2
+  exit 1
+fi
+
+exit 0

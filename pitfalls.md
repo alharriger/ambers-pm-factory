@@ -13,6 +13,13 @@ The working-relationship log. Every mistake gets an entry with a prevention rule
 - **Prevention rule:** Personal paths are gitignored (`identity/`, `projects/*/evidence/`, `evals/must-fail/`, `*.personal.*`, `*.private.*`). Before every commit, scan `git status` and the staged diff for personal facts. Nothing gets pushed until Amber decides repo visibility (private strongly recommended — even the strategy docs reference personal topics).
 - **Status:** Active
 
+## 2026-07-20 — Deleted a subsection from the append-only decision log
+
+- **What happened:** While updating decisions.md, I removed the "Pending Amber's ratification" subsection because both items were resolved. decisions.md is explicitly append-only ("Append, never rewrite history"). Caught and reverted within the same session — restored the text with RESOLVED annotations instead.
+- **Root cause:** Treated a status marker as disposable scratch rather than as part of the historical record.
+- **Prevention rule:** In append-only logs (decisions.md and any project decisions.md), never delete or rewrite prior lines. To update status, append a new entry or annotate the existing line in place (e.g. "RESOLVED <date>: ..."). Removal is never the move.
+- **Status:** Active
+
 ## 2026-07-19 — Snapshot docs drift within hours
 
 - **What happened:** `identity/README.md` states resume.md and the evals/ folder "were not exported in this snapshot" — but both exist on disk, added a couple of hours after the README was written. First session working from the docs would have gone hunting for files already present.

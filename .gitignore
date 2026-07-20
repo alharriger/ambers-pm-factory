@@ -24,6 +24,10 @@ evals/must-fail/
 private/
 local/
 
+# The privacy hook's real deny-list. It names the very personal terms
+# it protects, so it must never be committed. The .example is tracked.
+harness/privacy/deny-list.txt
+
 # ============================================================
 # OS / editor / tooling junk
 # ============================================================

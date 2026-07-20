@@ -31,7 +31,7 @@ The career project is a working prototype of half of this factory, and it's the 
 
 - The **proposal pipeline** (research → angle → draft → user-check → verify → produce) already discovered the right shape: staged workflow, generator/checker separation, fact-tracing with hard stops, synthetic panels as pressure-tests never validation, named human decision points ("Amber decides format").
 - The **voice system** (voice guide, scoring rubric, writing methodology, anti-AI checklist, benchmark corpus, approved-outputs library) is a real, calibrated eval system with versioned rules, changelogs, tiered ground truth, and a flag-and-confirm update loop. This is exactly the "trainable" property Amber wants, already proven on one domain.
-- The **failure history is gold.** The purged hallucinations (the 8→3 weeks metric, the invented "privacy team," the "experimentation systems" inflation), the contaminated benchmark that let choppy drafts pass, the OpenLoop voice failure from an output type with no methodology binding — every one of these is a documented factory defect with a documented fix. These become seed test cases for the verification harness.
+- The **failure history is gold.** The purged hallucinations (a fabricated timeline metric, an invented team, an inflated scope claim), the contaminated benchmark that let choppy drafts pass, a voice failure from an output type with no methodology binding — every one of these is a documented factory defect with a documented fix. These become seed test cases for the verification harness. (The specific cases live in the gitignored `evals/must-fail/` corpus, not in this public doc.)
 
 The prototype also has the one flaw Amber herself named: **the generator grades its own homework.** The writing methodology's Step 7 self-score runs inside the same context that wrote the draft. LLM-as-judge research says this reliably inflates scores (self-preference bias), and the system's own history shows it (the 5.0 score on the choppy about-page draft). Several skills have no unbiased checker at all. The factory's core upgrade is moving the binding judgment OUT of the generator: self-score survives as a cheap internal pre-check, but the gate that counts is an isolated verifier that never sees the generator's reasoning.
 
@@ -73,7 +73,7 @@ Layered gates, cheapest and most deterministic first. Code before agents, agents
 - **Judgment gates (always stop):** the strategic bet, the thesis/angle, the priority call, the kill call, anything that leaves the building under her name. These are decision points, not rubber stamps — the factory prepares the decision (options, evidence, trade-offs) and waits.
 - **Flow-through (no stop):** intermediate artifacts that passed Gates 0–2 feed the next stage automatically. Amber can always open the paper trail (every gate writes its report to disk), but the pipeline doesn't wait.
 
-**Standing invariants** (enforced in the harness so no individual skill can drop them): synthetic-panel output is never citable as evidence in any artifact; no named competency Amber lacks is ever asserted; factual boundaries (mental-health specifics, women's-health specifics) never enter outgoing copy; every artifact carries its verification report reference.
+**Standing invariants** (enforced in the harness so no individual skill can drop them): synthetic-panel output is never citable as evidence in any artifact; no named competency Amber lacks is ever asserted; factual boundaries (the sensitive personal domains enumerated in `identity/`) never enter outgoing copy; every artifact carries its verification report reference.
 
 ### 3.4 Why the harness must be code-enforced, not prompt-enforced
 
@@ -139,7 +139,7 @@ Each phase has an exit gate. Nothing in phase N+1 starts until N's exit gate pas
 
 1. **Naming and taxonomy** — do we brand the agents (like the proposal pipeline's Stage A–F) or keep functional names? Worth deciding before Phase 0 scaffolding.
 2. **The proposal pipeline retrofit scope** — Phase 1 pilots the harness on draft→verify. Do the other proposal stages (angle, produce) migrate during Phase 1 or wait for Phase 5?
-3. **Project Pack for One Day Stronger** — what evidence exists today (user notes, your own rehab logs, app analytics)? The Hypothesis Designer is only as good as the evidence corpus behind it.
+3. **Project Pack for One Day Stronger** — what evidence exists today (user notes, your own personal training logs, app analytics)? The Hypothesis Designer is only as good as the evidence corpus behind it.
 4. **Judge budget** — comfortable ceiling per artifact for the full loop (it will be several model calls per deliverable)?
 5. **A second pair of eyes** — any interest in an occasional human calibration ritual (e.g., monthly: re-score 5 judged artifacts yourself and diff against the judge)? The research says this is the single highest-leverage habit for keeping automated judges honest.
 

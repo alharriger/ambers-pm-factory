@@ -1,0 +1,27 @@
+# Privacy deny-list — EXAMPLE / TEMPLATE (this file IS committed).
+#
+# Copy to deny-list.txt (which is gitignored) and fill with the real
+# terms. The pre-commit gate blocks any commit whose staged additions
+# contain any term below, case-insensitive, as a literal substring.
+#
+# One term per line. Lines starting with # are comments. Keep terms
+# specific enough to avoid false positives (a full name, an employer,
+# a product codename — not a common word).
+#
+# Categories to populate in your real deny-list.txt:
+
+# --- Names (yours and anyone you'd never name publicly) ---
+# Jane Q. Public
+
+# --- Employers / clients that should stay private ---
+# Acme Corp
+# Initech
+
+# --- Health / sensitive domains you keep out of outgoing copy ---
+# (the specific conditions, treatments, or programs — not the category word)
+
+# --- Private product identifiers / internal codenames ---
+# Project Nightingale
+
+# --- Metrics or facts flagged as hallucinations/off-limits ---
+# (specific numbers or claims you never want reasserted)
