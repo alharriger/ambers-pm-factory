@@ -6,12 +6,12 @@
 ## → Next session: start here
 
 1. Run the session-start prompt below (read → confirm → ask → propose → wait).
-2. Read `decisions.md` (Sessions 1–4) and `improvements.md` before touching anything — the learning backlog has 3 open Identity Pack drift items awaiting Amber's confirm.
+2. Read `decisions.md` (Sessions 1–4) and `improvements.md` before touching anything — the learning backlog is current (the 3 Identity Pack drift items were resolved 2026-07-20; see `identity/README.md`'s path-convention note before using any snapshot cross-reference).
 3. **Phase 1 is the work:** build the verification harness in `harness/` as standalone components, in the 7-step order below, then retrofit the proposal draft→verify stages as the pilot. Do NOT build any agent yet — the harness comes first.
 4. First Phase-1 action to propose to Amber: the claims-ledger format (`harness/claims-ledger.md`), because it is the data contract every gate and generator depends on. Walk one real proposal artifact manually before encoding, per the working agreement.
 5. Housekeeping already done, don't redo: privacy gate installed (`bash harness/privacy/install.sh` on a fresh clone), naming convention set (functional names, PM-native vocab, shared roster — in CLAUDE.md), invariants ratified.
 
-**Open items carried in:** the 3 Identity Pack drift flags in `improvements.md` (Proposed, need Amber's confirm); Amber to review/expand the private `harness/privacy/deny-list.txt`; the Phase 2 One Day Stronger evidence-inventory conversation (blocks Phase 2b, not Phase 1).
+**Open items carried in:** Amber to review/expand the private `harness/privacy/deny-list.txt`; the Phase 2 One Day Stronger evidence-inventory conversation (blocks Phase 2b, not Phase 1). (Identity Pack drift flags — resolved 2026-07-20.)
 **Rule:** update the "Current phase" line and the checklists below at the end of every working session.
 
 ---
