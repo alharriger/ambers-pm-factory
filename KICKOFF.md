@@ -1,7 +1,17 @@
 # KICKOFF — Start Here
 
-**Current phase: Phase 0 (Bootstrap) — scaffolding done; exit blocked on Amber's three decisions (invariants, naming, repo visibility)**
-**Last updated:** 2026-07-19 (Session 2 — Claude Code bootstrap: .gitignore, working-agreement docs, pilot Project Pack, first local commit)
+**Current phase: Phase 0 + 0.5 COMPLETE and pushed. Next session starts Phase 1 (the verification harness).**
+**Last updated:** 2026-07-20 (Session 4 — Phase 0.5 privacy gate built, tested, redactions applied, repo pushed public and clean)
+
+## → Next session: start here
+
+1. Run the session-start prompt below (read → confirm → ask → propose → wait).
+2. Read `decisions.md` (Sessions 1–4) and `improvements.md` before touching anything — the learning backlog has 3 open Identity Pack drift items awaiting Amber's confirm.
+3. **Phase 1 is the work:** build the verification harness in `harness/` as standalone components, in the 7-step order below, then retrofit the proposal draft→verify stages as the pilot. Do NOT build any agent yet — the harness comes first.
+4. First Phase-1 action to propose to Amber: the claims-ledger format (`harness/claims-ledger.md`), because it is the data contract every gate and generator depends on. Walk one real proposal artifact manually before encoding, per the working agreement.
+5. Housekeeping already done, don't redo: privacy gate installed (`bash harness/privacy/install.sh` on a fresh clone), naming convention set (functional names, PM-native vocab, shared roster — in CLAUDE.md), invariants ratified.
+
+**Open items carried in:** the 3 Identity Pack drift flags in `improvements.md` (Proposed, need Amber's confirm); Amber to review/expand the private `harness/privacy/deny-list.txt`; the Phase 2 One Day Stronger evidence-inventory conversation (blocks Phase 2b, not Phase 1).
 **Rule:** update the "Current phase" line and the checklists below at the end of every working session.
 
 ---
@@ -23,11 +33,11 @@ The scaffolding in this repo is most of Phase 0. What remains:
 - [x] Ratify the 10 factory invariants in CLAUDE.md — **ratified 2026-07-20**
 - [x] Naming/taxonomy decided **2026-07-20**: functional kebab-case agent names, PM-native vocabulary (artifacts / gates / ship), one shared project-agnostic roster driven by Project Packs. Convention lives in CLAUDE.md.
 - [x] Repo visibility decided: **PUBLIC by design** (2026-07-20). It is a portfolio piece. Privacy becomes a build requirement — see Phase 0.5 below; nothing is pushed until that gate exists and the redaction review passes.
-- [x] `git init` housekeeping: remote confirmed; `.gitignore` added excluding all personal information (`identity/`, `projects/*/evidence/`, `evals/must-fail/`, `*.personal.*`/`*.private.*`); scaffold committed locally 2026-07-19. Push deliberately withheld pending the visibility decision above.
+- [x] `git init` housekeeping: remote confirmed; `.gitignore` added excluding all personal information (`identity/`, `projects/*/evidence/`, `evals/must-fail/`, `*.personal.*`/`*.private.*`); scaffold committed 2026-07-19; pushed public 2026-07-20 after the Phase 0.5 privacy gate landed.
 - [x] Create `projects/proposal-pipeline/` as the first Project Pack stub (it will be the Phase 1 pilot) — done 2026-07-19
 - [x] Skim `identity/` files and flag anything stale — done 2026-07-19; drift flags logged in decisions.md (identity/README "known gap" is stale, two cross-repo path references)
 
-**Exit gate:** invariants ratified, first commit made (push follows Phase 0.5), pilot Project Pack exists.
+**Exit gate:** invariants ratified ✓, first commit made ✓, pilot Project Pack exists ✓. **PHASE 0 COMPLETE** (push landed with Phase 0.5).
 
 ## Phase 0.5 — The privacy gate (DONE 2026-07-20, pending push)
 
@@ -35,9 +45,9 @@ The repo is public on purpose, so "don't commit personal information" is a rule 
 
 1. [x] **Pre-commit hook** (`harness/privacy/`) — blocks any staged file under a personal path and scans the staged diff against a gitignored deny-list of personal terms. Install: `bash harness/privacy/install.sh`. Verified: blocks a planted term, blocks a force-added personal file, allows a clean commit.
 2. [x] **One-time redaction review** — the 5 pre-decision spots swapped for category references; `git grep` for the terms returns clean across tracked files. Details in improvements.md.
-3. [ ] **First push** — after a final `git log -p` read-through. **AMBER: this is the moment personal-history text goes public — do the read-through with me before we push.**
+3. [x] **First push** — Amber did the read-through (One Day Stronger and cited author names confirmed fine to be public); pushed clean 2026-07-20.
 
-**Exit gate:** hook proven on a planted string ✓; redactions applied ✓; repo pushed clean (pending Amber's go).
+**Exit gate:** hook proven on a planted string ✓; redactions applied ✓; repo pushed clean ✓. **PHASE 0.5 COMPLETE.**
 
 ## Phase 1 — The Verification Harness (the pattern-setter)
 
